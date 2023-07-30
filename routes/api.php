@@ -19,7 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('metode',[DetailController::class,'findAssociationRules']);
 
 // Route API untuk check email tersedia
 Route::get(

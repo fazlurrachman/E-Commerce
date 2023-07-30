@@ -63,35 +63,5 @@ class DetailController extends Controller
         return $data;
     }
 
-    public function findItemSetRules()
-    {
-        $transaction_count = Transaction::count();
-
-       $transactions = DB::table('transaction_details as a')
-       ->crossJoin('transaction_details as b')
-       ->join('products as c','b.products_id','=','c.id')
-
-       ->select('a.products_id as product_id1', 'b.products_id as product_id2')
-
-       ->where('c.id', '<>', 'b.products_id')
-    //    ->where('a.products_id', '<', 'b.products_id')
-       ->distinct()
-       ->orderBy('a.products_id')
-       ->get();
-
-            $data = [];
-            foreach ($transactions as $item) {
-                if($item->product_id1 != $item->product_id2 ){
-                    $data[] = [
-                        'item' => $item->product_id1 ." dan ". $item->product_id2,
-                        
-                    ];
-                    
-                }
-            }
-
-        // $transactions = Transaction::with('details')->get();
-
-        return $data;
-    }
+    
 }
