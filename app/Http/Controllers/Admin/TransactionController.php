@@ -17,7 +17,14 @@ class TransactionController extends Controller
     {
         if (request()->ajax()) {
             $query = Transaction::with(['user']);
-
+            if(request()->tanggal_start && request()->tanggal_end){
+                $query->whereBeetwen('created_at',[request()->tanggal_start,request()->tanggal_end]);
+            }else if(request()->tanggal_start || request()->tanggal_end){
+                $query->whereDate('created_at',request()->tanggal_start??request()->tanggal_end);
+            }
+            if(request()->status){
+                $query->where('transaction_status',request()->status == "pending" ? "PENDING" : "SUCCESS");
+            }
             return Datatables::of($query)
                 ->addColumn('action', function ($item) {
                     return '
@@ -41,6 +48,12 @@ class TransactionController extends Controller
                                 </div>
                             </div>
                     </div>';
+                })
+                ->editColumn('total_price',function($q){
+                    return moneyFormat($q->total_price);
+                })
+                ->editColumn('created_at',function($q){
+                    return dateID($q->created_at);
                 })
                 ->rawColumns(['action', 'photo'])
                 ->make();

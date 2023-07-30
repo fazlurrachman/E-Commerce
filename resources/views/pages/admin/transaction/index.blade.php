@@ -16,6 +16,33 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
+                                <form  class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Tanggal Start</label>
+                                            <input type="date" class="form-control" name="tanggal" id="tanggal_start">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Tanggal End</label>
+                                            <input type="date" class="form-control" name="tanggal" id="tanggal_end">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Status</label>
+                                            <select name="status" class="form-control" id="status">
+                                                <option value="">Pilih</option>
+                                                <option value="pending">Pending</option>
+                                                <option value="success">Success</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                            <button type="button" id="cari" class="btn btn-primary">Cari</button>
+                                    </div>
+                                </form>
                                 <div class="table-responsive">
                                     <table class="table table-hover scroll-horizontal-vertical w-100" id="crudTable">
                                         <thead>
@@ -49,6 +76,12 @@
             ordering: true,
             ajax: {
                 url: '{!! url()->current() !!}',
+                data: function (i) {
+                                  i.tanggal_start = $('#tanggal_start').val();  
+                                  i.tanggal_end = $('#tanggal_end').val();  
+                                  i.status = $('#status').val();  
+                                   
+                                },
             },
             columns: [{
                 data: 'id',
@@ -73,5 +106,10 @@
                 width: '15%'
             }, ]
         });
+
+        $('#cari').on('click',function(){
+            $('#crudTable').DataTable().draw(true);
+
+        })
     </script>
 @endpush
