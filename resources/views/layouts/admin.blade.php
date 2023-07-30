@@ -24,6 +24,7 @@
                 <div class="sidebar-heading text-center">
                     <img src="/images/admin.png" alt="" class="my-4" style="max-width: 150px;" />
                 </div>
+                @if (auth()->user()->roles == "ADMIN")
                 <div class="list-group list-group-flush">
                     <a href="{{ route('admin-dashboard') }}"
                         class="list-group-item list-group-item-action {{ request()->is('admin') ? 'active' : '' }} ">
@@ -52,6 +53,15 @@
                         Sign Out
                     </a>
                 </div>
+                @else
+                <a href="{{ route('admin-dashboard') }}"
+                    class="list-group-item list-group-item-action {{ request()->is('admin') ? 'active' : '' }} ">
+                    Dashboard
+                </a>
+                <a href="{{ route('transaction.index') }}" class="list-group-item list-group-item-action {{ request()->is('admin/transaction*') ? 'active' : '' }}">
+                    Transactions
+                </a>
+                @endif
             </div>
 
             <!-- Page Content -->

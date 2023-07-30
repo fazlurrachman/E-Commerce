@@ -59,6 +59,7 @@
                                                 <label>Roles</label>
                                                 <select name="roles" required class="form-control">
                                                     <option value="{{ $item->roles }}" selected>Tidak diganti</option>
+                                                    <option value="OWNER">Owner</option>
                                                     <option value="ADMIN">Admin</option>
                                                     <option value="USER">User</option>
                                                 </select>

@@ -34,8 +34,9 @@
                                             <label for="">Status</label>
                                             <select name="status" class="form-control" id="status">
                                                 <option value="">Pilih</option>
-                                                <option value="pending">Pending</option>
-                                                <option value="success">Success</option>
+                                                <option value="pending" {{ request()->status == "PENDING" ? "selected" : ""}}>Pending</option>
+                                                <option value="success" {{ request()->status == "SUCCESS" ? "selected" : ""}}>Success</option>
+                                                <option value="shipping" {{ request()->status == "SHIPPING" ? "selected" : ""}}>Shipping</option>
                                             </select>
                                         </div>
                                     </div>

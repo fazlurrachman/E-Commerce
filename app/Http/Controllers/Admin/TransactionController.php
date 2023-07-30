@@ -23,7 +23,7 @@ class TransactionController extends Controller
                 $query->whereDate('created_at',request()->tanggal_start??request()->tanggal_end);
             }
             if(request()->status){
-                $query->where('transaction_status',request()->status == "pending" ? "PENDING" : "SUCCESS");
+                $query->where('transaction_status',request()->status == "pending" ? "PENDING" :(request()->status == "success" ? "SUCCESS" : "SHIPPING"  ));
             }
             return Datatables::of($query)
                 ->addColumn('action', function ($item) {

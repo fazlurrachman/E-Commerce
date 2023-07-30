@@ -18,7 +18,7 @@ class IsAdmin
     {
         //middleware untuk pengecekan
         //Pengecekan apakah user yang login adalah admin
-        if (Auth::user() && Auth::user()->roles == 'ADMIN') {
+        if (Auth::user() && Auth::user()->roles == 'ADMIN' || Auth::user()->roles == 'OWNER') {
             return $next($request);
         }
 
