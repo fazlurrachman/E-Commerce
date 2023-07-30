@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DetailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('metode',[DetailController::class,'findAssociationRules']);
 
 // Route API untuk check email tersedia
 Route::get(

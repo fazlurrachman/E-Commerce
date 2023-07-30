@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DetailController extends Controller
 {
@@ -33,5 +35,63 @@ class DetailController extends Controller
         Cart::create($data);
 
         return redirect()->route('cart');
+    }
+
+    public function findAssociationRules()
+    {
+        $transaction_count = Transaction::count();
+
+       $transactions =  DB::table('transactions as a')
+            ->join('transaction_details as b','a.id','=','b.transaction_id')
+            ->join('products as c','b.products_id','=','c.id')
+            ->select(DB::raw('b.code as kode_transaksi,c.name,b.products_id as product_id, COUNT(b.products_id) AS count_product',
+            ))
+            ->groupBy('b.products_id')
+            ->orderByDesc('count_product')
+            ->get();
+            $data = [];
+            foreach ($transactions as $item) {
+                $data[] = [
+                    'item' => $item->name,
+                    'transaksi' => $item->count_product,
+                    'support' => ($item->count_product / $transaction_count) * 100 ."%",
+                ];
+            }
+
+        // $transactions = Transaction::with('details')->get();
+        return $this->findItemSetRules();
+        return $data;
+    }
+
+    public function findItemSetRules()
+    {
+        $transaction_count = Transaction::count();
+
+       $transactions = DB::table('transaction_details as a')
+       ->crossJoin('transaction_details as b')
+       ->join('products as c','b.products_id','=','c.id')
+
+       ->select('a.products_id as product_id1', 'b.products_id as product_id2')
+
+       ->where('c.id', '<>', 'b.products_id')
+    //    ->where('a.products_id', '<', 'b.products_id')
+       ->distinct()
+       ->orderBy('a.products_id')
+       ->get();
+
+            $data = [];
+            foreach ($transactions as $item) {
+                if($item->product_id1 != $item->product_id2 ){
+                    $data[] = [
+                        'item' => $item->product_id1 ." dan ". $item->product_id2,
+                        
+                    ];
+                    
+                }
+            }
+
+        // $transactions = Transaction::with('details')->get();
+
+        return $data;
     }
 }
