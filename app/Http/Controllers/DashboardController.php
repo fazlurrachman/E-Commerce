@@ -13,10 +13,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $transactions = TransactionDetail::with(['transaction.user', 'product.galleries'])
-            ->whereHas('product', function ($product) {
-                $product->where('users_id', Auth::user()->id);
-            });
+        // $transactions = TransactionDetail::with(['transaction.user', 'product.galleries'])
+        //     ->whereHas('product', function ($product) {
+        //         $product->where('users_id', Auth::user()->id);
+        //     });
+
         $buyTransactions = TransactionDetail::with(['transaction.user', 'product.galleries'])
             ->whereHas('transaction', function ($transaction) {
                 $transaction->where('users_id', Auth::user()->id);
@@ -25,17 +26,17 @@ class DashboardController extends Controller
         // dd(Auth::user()->id);
         // dd($transactions->get());
 
-        $revenue = $transactions->get()->reduce(function ($carry, $item) {
-            return $carry + $item->price;
-        });
+        // $revenue = $transactions->get()->reduce(function ($carry, $item) {
+        //     return $carry + $item->price;
+        // });
 
-        $customer = User::count();
+        // $customer = User::count();
 
         return view('pages.dashboard', [
-            'transaction_count' => $transactions->count(),
+            // 'transaction_count' => $transactions->count(),
             'transaction_data' => $buyTransactions,
-            'revenue' => $revenue,
-            'customer' => $customer,
+            // 'revenue' => $revenue,
+            // 'customer' => $customer,
         ]);
     }
 }

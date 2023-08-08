@@ -72,7 +72,7 @@ class CheckoutController extends Controller
                 'email' => Auth::user()->email,
             ],
             'enabled_payment' => [
-                'gopay', 'bank_transfer'
+                'gopay', 'bank_transfer', 'permata_va'
             ],
             'vtweb' => []
         ];

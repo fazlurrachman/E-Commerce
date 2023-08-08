@@ -24,43 +24,51 @@
                 <div class="sidebar-heading text-center">
                     <img src="/images/admin.png" alt="" class="my-4" style="max-width: 150px;" />
                 </div>
-                @if (auth()->user()->roles == "ADMIN")
-                <div class="list-group list-group-flush">
+
+                @if (auth()->user()->roles == 'ADMIN')
+                    <div class="list-group list-group-flush">
+                        <a href="{{ route('admin-dashboard') }}"
+                            class="list-group-item list-group-item-action {{ request()->is('admin') ? 'active' : '' }} ">
+                            Dashboard
+                        </a>
+                        <a href="{{ route('product.index') }}"
+                            class="list-group-item list-group-item-action {{ request()->is('admin/product') ? 'active' : '' }} ">
+                            Products
+                        </a>
+                        <a href="{{ route('product-gallery.index') }}"
+                            class="list-group-item list-group-item-action {{ request()->is('admin/product-gallery*') ? 'active' : '' }} ">
+                            Galleries
+                        </a>
+                        <a href="{{ route('category.index') }}"
+                            class="list-group-item list-group-item-action {{ request()->is('admin/category*') ? 'active' : '' }} ">
+                            Categories
+                        </a>
+                        <a href="{{ route('transaction.index') }}"
+                            class="list-group-item list-group-item-action {{ request()->is('admin/transaction*') ? 'active' : '' }}">
+                            Transactions
+                        </a>
+
+                        <a href="{{ route('user.index') }}"
+                            class="list-group-item list-group-item-action {{ request()->is('admin/user*') ? 'active' : '' }} ">
+                            Users
+                        </a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
+                @else
                     <a href="{{ route('admin-dashboard') }}"
                         class="list-group-item list-group-item-action {{ request()->is('admin') ? 'active' : '' }} ">
                         Dashboard
                     </a>
-                    <a href="{{ route('product.index') }}"
-                        class="list-group-item list-group-item-action {{ request()->is('admin/product') ? 'active' : '' }} ">
-                        Products
-                    </a>
-                    <a href="{{ route('product-gallery.index') }}"
-                        class="list-group-item list-group-item-action {{ request()->is('admin/product-gallery*') ? 'active' : '' }} ">
-                        Galleries
-                    </a>
-                    <a href="{{ route('category.index') }}"
-                        class="list-group-item list-group-item-action {{ request()->is('admin/category*') ? 'active' : '' }} ">
-                        Categories
-                    </a>
-                    <a href="{{ route('transaction.index') }}" class="list-group-item list-group-item-action {{ request()->is('admin/transaction*') ? 'active' : '' }}">
+                    <a href="{{ route('transaction.index') }}"
+                        class="list-group-item list-group-item-action {{ request()->is('admin/transaction*') ? 'active' : '' }}">
                         Transactions
                     </a>
-                    <a href="{{ route('user.index') }}"
-                        class="list-group-item list-group-item-action {{ request()->is('admin/user*') ? 'active' : '' }} ">
-                        Users
-                    </a>
-                    <a href="/index.html" class="list-group-item list-group-item-action">
-                        Sign Out
-                    </a>
-                </div>
-                @else
-                <a href="{{ route('admin-dashboard') }}"
-                    class="list-group-item list-group-item-action {{ request()->is('admin') ? 'active' : '' }} ">
-                    Dashboard
-                </a>
-                <a href="{{ route('transaction.index') }}" class="list-group-item list-group-item-action {{ request()->is('admin/transaction*') ? 'active' : '' }}">
-                    Transactions
-                </a>
                 @endif
             </div>
 

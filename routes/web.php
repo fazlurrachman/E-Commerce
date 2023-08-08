@@ -6,7 +6,8 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductGalleryController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
-use App\Models\Product;
+use App\Http\Controllers\C_Apriori;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,11 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::get('/categories', [App\Http\Controllers\CategoryController::class, 'index'])->name('categories');
 Route::get('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'detail'])->name('categories-detail');
 
+// COBA APRIORI
+// Route::get('/setup', [C_Apriori::class, 'setupPerhitunganApriori']);
+// Route::post('/proses', [C_Apriori::class, 'prosesAnalisaApriori']);
+// Route::get('/hasil/{kdPengujian}', [C_Apriori::class, 'hasilAnalisa']);
+
 Route::get('/details/{id}', [App\Http\Controllers\DetailController::class, 'index'])->name('detail');
 Route::post('/details/{id}', [App\Http\Controllers\DetailController::class, 'add'])->name('detail-add');
 
@@ -32,8 +38,8 @@ Route::get('/success', [App\Http\Controllers\CartController::class, 'success'])-
 
 
 Route::post('/checkout/callback', [App\Http\Controllers\CheckoutController::class, 'callback'])->name('midtrans-callback');
-
 Route::get('/register/success', [App\Http\Controllers\Auth\RegisterController::class, 'success'])->name('register-success');
+
 
 //Route middleware dimana user harus login
 Route::group(['middleware' => ['auth']], function () {

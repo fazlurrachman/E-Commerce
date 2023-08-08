@@ -51,6 +51,9 @@ class ProductController extends Controller
                             </div>
                     </div>';
                 })
+                ->editColumn('price', function ($q) {
+                    return moneyFormat($q->price);
+                })
                 ->rawColumns(['action', 'photo'])
                 ->make();
         }
@@ -80,6 +83,8 @@ class ProductController extends Controller
         $data = $request->all();
 
         $data['slug'] = Str::slug($request->name);
+        $produk = new Product();
+        $produk->kd_produk = Str::uuid();
 
         Product::create($data);
 

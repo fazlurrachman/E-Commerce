@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('users_id');
             $table->integer('price');
             $table->longText('description');
+            //  $table->char('kd_produk', 100);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -12,12 +12,20 @@
                     <a href="{{ route('home') }}" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('categories') }}" class="nav-link">categories</a>
+                    <a href="{{ route('categories') }}" class="nav-link">Produk</a>
 
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Rewards</a>
-                </li>
+                {{-- <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" onclick="renderPage('setup')">
+                        Proses Apriori
+                    </a>
+                </li> --}}
+                {{-- <li class="nav-item">
+
+                 <a href="{{ route('setup') }}" class="nav-link">
+                        Proses Apriori
+                    </a>
+                </li> --}}
 
                 {{-- JIka guest/tamu munculkan , jika login hilangkan --}}
                 @guest
@@ -51,6 +59,7 @@
                             </form>
                         </div>
                     </li>
+
                     <li class="nav-item">
                         <a href="{{ route('cart') }}" class="nav-link d-inline-block mt-2">
 

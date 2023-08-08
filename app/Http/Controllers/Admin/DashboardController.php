@@ -18,24 +18,29 @@ class DashboardController extends Controller
         $revenue = Transaction::sum('total_price');
 
         $transaction = Transaction::count();
+
         $transaction_best =  DB::table('transactions as a')
-            ->join('transaction_details as b','a.id','=','b.transaction_id')
-            ->join('products as c','b.products_id','=','c.id')
-            ->select(DB::raw('b.code as kode_transaksi,c.name,b.products_id as product_id, COUNT(b.products_id) AS count_product',
+            ->join('transaction_details as b', 'a.id', '=', 'b.transaction_id')
+            ->join('products as c', 'b.products_id', '=', 'c.id')
+            ->select(DB::raw(
+                'b.code as kode_transaksi,c.name,b.products_id as product_id, COUNT(b.products_id) AS count_product',
             ))
-            ->whereMonth('a.created_at',date('m'))
-            ->whereYear('a.created_at',date('Y'))
+            ->whereMonth('a.created_at', date('m'))
+            ->whereYear('a.created_at', date('Y'))
             ->groupBy('b.products_id')
             ->orderByDesc('count_product')
             ->get();
-        $transaction_success = Transaction::where('transaction_status','SUCCESS')->count();
-        $transaction_pending = Transaction::where('transaction_status','PENDING')->count();
-        $transaction_shipping = Transaction::where('transaction_status','SHIPPING')->count();
 
-        $pendapatan_bulan = Transaction::whereMonth('created_at',date('m'))->whereYear('created_at',date('Y'))->sum('total_price');
-        $pendapatan_tahun = Transaction::whereYear('created_at',date('Y'))->sum('total_price');
-        $pendapatan_global = Transaction::whereYear('created_at',date('Y'))->sum('total_price');
+
+        $transaction_success = Transaction::where('transaction_status', 'SUCCESS')->count();
+        $transaction_pending = Transaction::where('transaction_status', 'PENDING')->count();
+        $transaction_shipping = Transaction::where('transaction_status', 'SHIPPING')->count();
+
+        $pendapatan_bulan = Transaction::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->sum('total_price');
+        $pendapatan_tahun = Transaction::whereYear('created_at', date('Y'))->sum('total_price');
+        $pendapatan_global = Transaction::whereYear('created_at', date('Y'))->sum('total_price');
         // return  $chart->build();
+
         return view('pages.admin.dashboard', [
             'customer' => $customer,
             'revenue' => $revenue,
