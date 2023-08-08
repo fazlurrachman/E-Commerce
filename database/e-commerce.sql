@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 01, 2023 at 04:34 AM
+-- Generation Time: Aug 08, 2023 at 03:39 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -43,9 +43,9 @@ CREATE TABLE `carts` (
 
 CREATE TABLE `categories` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `photo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -65,9 +65,9 @@ INSERT INTO `categories` (`id`, `name`, `photo`, `slug`, `deleted_at`, `created_
 --
 
 CREATE TABLE `districts` (
-  `id` char(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `regency_id` char(4) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` char(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `regency_id` char(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -7303,11 +7303,11 @@ INSERT INTO `districts` (`id`, `regency_id`, `name`) VALUES
 
 CREATE TABLE `failed_jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -7319,7 +7319,7 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -7351,7 +7351,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (21, '2017_05_02_140432_create_provinces_tables', 7),
 (22, '2017_05_02_140444_create_regencies_tables', 7),
 (23, '2017_05_02_142019_create_districts_tables', 7),
-(24, '2017_05_02_143454_create_villages_tables', 7);
+(24, '2017_05_02_143454_create_villages_tables', 7),
+(25, '2023_08_08_025250_tbl_support', 8),
+(26, '2023_08_08_025305_tbl_nilai_kombinasi', 8),
+(27, '2023_08_08_025326_tbl_confidence', 8),
+(28, '2023_08_08_025347_tbl_pengujian', 8),
+(29, '2023_08_08_030704_add_field_kd_produk_to_table_product', 9);
 
 -- --------------------------------------------------------
 
@@ -7360,8 +7365,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -7372,8 +7377,8 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -7385,11 +7390,11 @@ CREATE TABLE `password_reset_tokens` (
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -7404,27 +7409,28 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `products` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `users_id` int NOT NULL,
   `price` int NOT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `categories_id` int NOT NULL
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `categories_id` int NOT NULL,
+  `kd_produk` char(100) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `users_id`, `price`, `description`, `deleted_at`, `created_at`, `updated_at`, `slug`, `categories_id`) VALUES
-(1, 'Kue Bhoi', 1, 10000, '<p>Kue bhoi merupakan salah satu kue khas Aceh yg berbentuk unik, seperti bentuk ikan dan daun. kue bhoi merupakan kue yang berbahan dasar tepung dan telur yg memiliki cita rasa manis, gurih, dan empuk. kue bhoi biasa disajikan sebagai kue lebaran dan juga sebagai hantaran pengantin di daerah Aceh. Kue bhoi biasa dinikmati untuk bersantai ditemani dengan kopi atau teh.</p>\r\n\r\n<p><strong>Komposisi : Tepung Terigu, Telur, Gula Pasir, Santan.</strong><br />\r\n&nbsp;</p>', NULL, '2023-07-28 21:55:06', '2023-07-28 22:48:55', 'kue-bhoi', 1),
-(2, 'Keukarah', 1, 15000, '<p>Keukarah atau yg lumrah disebut kue sangkar burung ini merupakan salah satu kue khas Aceh yang memiliki bentuk yang unik. Seperti namanya kue ini memiliki bentuk seperti sangkar burung, dan memiliki tekstur yg renyah dan rapuh. Rasanya yg manis dan gurih menjadikan kue ini enak dinikmati sebagai pendamping teh dan kopi. Kue keukarah ini merupakan salah satu kue wajib hantaran bagi masyarakat Aceh, dan juga sering disajikan pada saat lebaran.</p>\r\n\r\n<p><strong>Komposisi : Tepung Beras Ketan, Tepung Terigu, Santan.</strong><br />\r\n&nbsp;</p>', NULL, '2023-07-28 22:06:58', '2023-07-28 22:50:30', 'keukarah', 1),
-(3, 'Kue Seupet', 1, 15000, '<p>Kue seupet merupakan kue yang memiliki tekstur renyah dan rapuh.&nbsp; Kue yang memiliki rasa manis dan gurih ini merupakan kue khas Aceh yang wajib disajikan sebagai salah satu kue lebaran. kue yg berbahan tepung dan santan ini tidak hanya enak dinikmati bersama dengan teh, tetapi enak juga dinikmati sebagai cocolan eskrim.</p>\r\n\r\n<p><strong>Komposisi : Tepung Beras, Santan, Telur.</strong></p>', NULL, '2023-07-28 22:17:32', '2023-07-28 22:51:24', 'kue-seupet', 1),
-(4, 'Kue Gring', 1, 15000, '<p>Kue gring merupakan kue khas aceh yg &nbsp;terbuat dari beras yang direbus kemudian dikeringkan lalu digoreng dan dicampur dengan gula merah. Kue yang bercita rasa manis legit dan renyah ini biasanya disajikan sebagai salah satu kue hantaran bagi masyarakat Aceh.</p>\r\n\r\n<p><strong>Komposisi : Beras, Gula Merah, Gula Pasir.</strong></p>', NULL, '2023-07-28 22:22:07', '2023-07-28 22:52:30', 'kue-gring', 1),
-(5, 'Kue Bangkit', 1, 15000, '<p>Kue Bangkit</p>', NULL, '2023-07-28 22:23:39', '2023-07-28 22:23:39', 'kue-bangkit', 1);
+INSERT INTO `products` (`id`, `name`, `users_id`, `price`, `description`, `deleted_at`, `created_at`, `updated_at`, `slug`, `categories_id`, `kd_produk`) VALUES
+(1, 'Kue Bhoi', 1, 10000, '<p>Kue bhoi merupakan salah satu kue khas Aceh yg berbentuk unik, seperti bentuk ikan dan daun. kue bhoi merupakan kue yang berbahan dasar tepung dan telur yg memiliki cita rasa manis, gurih, dan empuk. kue bhoi biasa disajikan sebagai kue lebaran dan juga sebagai hantaran pengantin di daerah Aceh. Kue bhoi biasa dinikmati untuk bersantai ditemani dengan kopi atau teh.</p>\r\n\r\n<p><strong>Komposisi : Tepung Terigu, Telur, Gula Pasir, Santan.</strong><br />\r\n&nbsp;</p>', NULL, '2023-07-28 21:55:06', '2023-07-28 22:48:55', 'kue-bhoi', 1, ''),
+(2, 'Keukarah', 1, 15000, '<p>Keukarah atau yg lumrah disebut kue sangkar burung ini merupakan salah satu kue khas Aceh yang memiliki bentuk yang unik. Seperti namanya kue ini memiliki bentuk seperti sangkar burung, dan memiliki tekstur yg renyah dan rapuh. Rasanya yg manis dan gurih menjadikan kue ini enak dinikmati sebagai pendamping teh dan kopi. Kue keukarah ini merupakan salah satu kue wajib hantaran bagi masyarakat Aceh, dan juga sering disajikan pada saat lebaran.</p>\r\n\r\n<p><strong>Komposisi : Tepung Beras Ketan, Tepung Terigu, Santan.</strong><br />\r\n&nbsp;</p>', NULL, '2023-07-28 22:06:58', '2023-07-28 22:50:30', 'keukarah', 1, ''),
+(3, 'Kue Seupet', 1, 15000, '<p>Kue seupet merupakan kue yang memiliki tekstur renyah dan rapuh.&nbsp; Kue yang memiliki rasa manis dan gurih ini merupakan kue khas Aceh yang wajib disajikan sebagai salah satu kue lebaran. kue yg berbahan tepung dan santan ini tidak hanya enak dinikmati bersama dengan teh, tetapi enak juga dinikmati sebagai cocolan eskrim.</p>\r\n\r\n<p><strong>Komposisi : Tepung Beras, Santan, Telur.</strong></p>', NULL, '2023-07-28 22:17:32', '2023-07-28 22:51:24', 'kue-seupet', 1, ''),
+(4, 'Kue Gring', 1, 15000, '<p>Kue gring merupakan kue khas aceh yg &nbsp;terbuat dari beras yang direbus kemudian dikeringkan lalu digoreng dan dicampur dengan gula merah. Kue yang bercita rasa manis legit dan renyah ini biasanya disajikan sebagai salah satu kue hantaran bagi masyarakat Aceh.</p>\r\n\r\n<p><strong>Komposisi : Beras, Gula Merah, Gula Pasir.</strong></p>', NULL, '2023-07-28 22:22:07', '2023-07-28 22:52:30', 'kue-gring', 1, ''),
+(5, 'Kue Bangkit', 1, 15000, '<p>Kue Bangkit</p>', NULL, '2023-07-28 22:23:39', '2023-07-28 22:23:39', 'kue-bangkit', 1, '');
 
 -- --------------------------------------------------------
 
@@ -7434,7 +7440,7 @@ INSERT INTO `products` (`id`, `name`, `users_id`, `price`, `description`, `delet
 
 CREATE TABLE `product_galleries` (
   `id` bigint UNSIGNED NOT NULL,
-  `photos` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `photos` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `products_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -7473,8 +7479,8 @@ INSERT INTO `product_galleries` (`id`, `photos`, `products_id`, `created_at`, `u
 --
 
 CREATE TABLE `provinces` (
-  `id` char(2) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -7524,9 +7530,9 @@ INSERT INTO `provinces` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `regencies` (
-  `id` char(4) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `province_id` char(2) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` char(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `province_id` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -8052,6 +8058,55 @@ INSERT INTO `regencies` (`id`, `province_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_nilai_kombinasi`
+--
+
+CREATE TABLE `tbl_nilai_kombinasi` (
+  `id` bigint UNSIGNED NOT NULL,
+  `kd_pengujian` char(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kd_kombinasi` char(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kd_barang_a` char(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kd_barang_b` char(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `jumlah_transaksi` int NOT NULL,
+  `support` double(8,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_pengujian`
+--
+
+CREATE TABLE `tbl_pengujian` (
+  `id` bigint UNSIGNED NOT NULL,
+  `kd_pengujian` char(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_penguji` char(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `min_supp` int NOT NULL,
+  `min_confidence` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_support`
+--
+
+CREATE TABLE `tbl_support` (
+  `id` bigint UNSIGNED NOT NULL,
+  `kd_pengujian` char(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kd_produk` char(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `support` double(8,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `transactions`
 --
 
@@ -8061,11 +8116,11 @@ CREATE TABLE `transactions` (
   `insurance_price` int NOT NULL,
   `shipping_price` int NOT NULL,
   `total_price` int NOT NULL,
-  `transaction_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `transaction_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -8085,7 +8140,8 @@ INSERT INTO `transactions` (`id`, `users_id`, `insurance_price`, `shipping_price
 (10, 7, 0, 0, 15000, 'PENDING', NULL, '2023-07-29 20:14:28', '2023-07-29 20:14:28', 'STORE-386776'),
 (11, 6, 0, 0, 40000, 'PENDING', NULL, '2023-07-31 04:48:11', '2023-07-31 04:48:11', 'STORE-822149'),
 (12, 6, 0, 0, 15000, 'PENDING', NULL, '2023-07-31 08:44:33', '2023-07-31 08:44:33', 'STORE-642943'),
-(13, 6, 0, 0, 15000, 'PENDING', NULL, '2023-07-31 08:45:01', '2023-07-31 08:45:01', 'STORE-567840');
+(13, 6, 0, 0, 15000, 'PENDING', NULL, '2023-07-31 08:45:01', '2023-07-31 08:45:01', 'STORE-567840'),
+(14, 9, 0, 0, 10000, 'SHIPPING', NULL, '2023-08-06 09:08:35', '2023-08-06 09:10:06', 'STORE-563078');
 
 -- --------------------------------------------------------
 
@@ -8100,9 +8156,9 @@ CREATE TABLE `transaction_details` (
   `price` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `shipping_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `resi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `shipping_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `resi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -8125,7 +8181,8 @@ INSERT INTO `transaction_details` (`id`, `transaction_id`, `products_id`, `price
 (13, 11, 1, 10000, '2023-07-31 04:48:11', '2023-07-31 04:48:11', 'PENDING', '', 'TRX-342627'),
 (14, 11, 2, 15000, '2023-07-31 04:48:11', '2023-07-31 04:48:11', 'PENDING', '', 'TRX-351997'),
 (15, 11, 3, 15000, '2023-07-31 04:48:11', '2023-07-31 04:48:11', 'PENDING', '', 'TRX-949706'),
-(16, 12, 5, 15000, '2023-07-31 08:44:33', '2023-07-31 08:44:33', 'PENDING', '', 'TRX-818138');
+(16, 12, 5, 15000, '2023-07-31 08:44:33', '2023-07-31 08:44:33', 'PENDING', '', 'TRX-818138'),
+(17, 14, 1, 10000, '2023-08-06 09:08:35', '2023-08-06 09:08:35', 'PENDING', '', 'TRX-397045');
 
 -- --------------------------------------------------------
 
@@ -8135,25 +8192,25 @@ INSERT INTO `transaction_details` (`id`, `transaction_id`, `products_id`, `price
 
 CREATE TABLE `users` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address_one` longtext COLLATE utf8mb4_unicode_ci,
-  `address_two` longtext COLLATE utf8mb4_unicode_ci,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address_one` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `address_two` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `provinces_id` int DEFAULT NULL,
   `regencies_id` int DEFAULT NULL,
   `zip_code` int DEFAULT NULL,
-  `country` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `store_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `store_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `categories_id` int DEFAULT NULL,
   `store_status` int DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `roles` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'USER'
+  `roles` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'USER'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -8164,7 +8221,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ad
 (1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$Yf2hcRe3C4pws9ZGrcTwsuzemL8ZUkZ1k/DmamUnYPh3EQMcVBMLK', 'BTN Kupula Indah', 'BTN Kupula Indah Blok F', 11, 1110, 24251, 'Indonesia', '0852 1212 1315', NULL, NULL, NULL, NULL, NULL, '2023-07-23 00:17:39', '2023-07-28 21:46:31', 'ADMIN'),
 (6, 'alul', 'alul@gmail.com', NULL, '$2y$10$dS/in2FedDqVQvvmg1ailu9w1yHJNW5qgikBCkIs/bd.nv2JFoVky', 'Btn Kupula Indah', 'Jln. Kulam Putro, Blok F', 11, NULL, 24211, 'Indonesia', '0852 1212 1212', NULL, NULL, NULL, NULL, NULL, '2023-07-29 19:59:27', '2023-07-31 08:44:33', 'USER'),
 (7, 'Hiro', 'hiro@gmail.com', NULL, '$2y$10$EvZJ2VWIWMkILWii4.owN.u3D9cVdkop.9LxxCqRPXrcS1F.sbbYy', 'Btn Kupula Indah', 'Jln. Kulam Putro, Blok F', 11, NULL, 24211, 'Indonesia', '0852 1212 1212', NULL, NULL, NULL, NULL, NULL, '2023-07-29 20:05:36', '2023-07-29 20:06:13', 'USER'),
-(8, 'Owner', 'owner@gmail.com', NULL, '$2y$10$jrgLr6htHZYujXw7v6BQTuvEEgGdbJO97rfGdz/TiGj5CbPaRFMvW', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-30 05:02:46', '2023-07-30 05:02:46', 'OWNER');
+(8, 'Owner', 'owner@gmail.com', NULL, '$2y$10$jrgLr6htHZYujXw7v6BQTuvEEgGdbJO97rfGdz/TiGj5CbPaRFMvW', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-30 05:02:46', '2023-07-30 05:02:46', 'OWNER'),
+(9, 'Niki', 'niki@gmail.com', NULL, '$2y$10$Z6esAlNKtcoiiJ3WgHT4OuIOZOFDUAPb3HytdCJKyTgbnFM/UaORi', 'Btn Kupula Indah', 'Jln. Kulam Putro, Blok F', 11, NULL, 24211, 'Indonesia', '0852 1212 1212', NULL, NULL, NULL, NULL, NULL, '2023-08-06 09:08:12', '2023-08-06 09:08:35', 'USER');
 
 -- --------------------------------------------------------
 
@@ -8173,9 +8231,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ad
 --
 
 CREATE TABLE `villages` (
-  `id` char(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `district_id` char(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `district_id` char(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -88862,6 +88920,24 @@ ALTER TABLE `regencies`
   ADD KEY `regencies_id_index` (`id`);
 
 --
+-- Indexes for table `tbl_nilai_kombinasi`
+--
+ALTER TABLE `tbl_nilai_kombinasi`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_pengujian`
+--
+ALTER TABLE `tbl_pengujian`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_support`
+--
+ALTER TABLE `tbl_support`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `transactions`
 --
 ALTER TABLE `transactions`
@@ -88896,7 +88972,7 @@ ALTER TABLE `villages`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -88914,7 +88990,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -88935,22 +89011,40 @@ ALTER TABLE `product_galleries`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
+-- AUTO_INCREMENT for table `tbl_nilai_kombinasi`
+--
+ALTER TABLE `tbl_nilai_kombinasi`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_pengujian`
+--
+ALTER TABLE `tbl_pengujian`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_support`
+--
+ALTER TABLE `tbl_support`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `transaction_details`
 --
 ALTER TABLE `transaction_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
