@@ -1,13 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductGalleryController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\C_Apriori;
-
+use App\Http\Controllers\ApioriController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +17,7 @@ use App\Http\Controllers\C_Apriori;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -26,20 +25,17 @@ Route::get('/categories', [App\Http\Controllers\CategoryController::class, 'inde
 Route::get('/categories/{id}', [App\Http\Controllers\CategoryController::class, 'detail'])->name('categories-detail');
 
 // COBA APRIORI
-// Route::get('/setup', [C_Apriori::class, 'setupPerhitunganApriori']);
-// Route::post('/proses', [C_Apriori::class, 'prosesAnalisaApriori']);
-// Route::get('/hasil/{kdPengujian}', [C_Apriori::class, 'hasilAnalisa']);
+Route::get('/setup', [ApioriController::class, 'setupPerhitunganApriori'])->name('apiori.setup');
+Route::post('/proses', [ApioriController::class, 'prosesAnalisaApriori'])->name('apiori.proses');
+Route::get('/hasil/{kdPengujian}', [ApioriController::class, 'hasilAnalisa'])->name('apiori.hasil');
 
 Route::get('/details/{id}', [App\Http\Controllers\DetailController::class, 'index'])->name('detail');
 Route::post('/details/{id}', [App\Http\Controllers\DetailController::class, 'add'])->name('detail-add');
 
-
 Route::get('/success', [App\Http\Controllers\CartController::class, 'success'])->name('success');
-
 
 Route::post('/checkout/callback', [App\Http\Controllers\CheckoutController::class, 'callback'])->name('midtrans-callback');
 Route::get('/register/success', [App\Http\Controllers\Auth\RegisterController::class, 'success'])->name('register-success');
-
 
 //Route middleware dimana user harus login
 Route::group(['middleware' => ['auth']], function () {
@@ -90,7 +86,5 @@ Route::prefix('admin')
         Route::resource('product-gallery', ProductGalleryController::class);
         Route::resource('transaction', TransactionController::class);
     });
-
-
 
 Auth::routes();

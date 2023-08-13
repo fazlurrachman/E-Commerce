@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\M_Nilai_Kombinasi;
+use App\Models\M_Pengujian;
+use App\Models\M_Support;
+use App\Models\Product;
+use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-use App\Models\M_Pengujian;
-use App\Models\TransactionDetail;
-use App\Models\Product;
-use App\Models\M_Support;
-use App\Models\M_Nilai_Kombinasi;
-
-
-class C_Apriori extends Controller
+class ApioriController extends Controller
 {
     public function setupPerhitunganApriori()
     {
@@ -22,21 +20,22 @@ class C_Apriori extends Controller
 
     public function prosesAnalisaApriori(Request $request)
     {
+        $nama = $request->nama;
         $minSupp = $request->support;
         $minConfidence = $request->confidence;
         // insert data pengujian
         $kdPengujian = Str::uuid();
         $pengujian = new M_Pengujian();
         $pengujian->kd_pengujian = $kdPengujian;
-        $pengujian->nama_penguji = $request->nama;
+        $pengujian->nama_penguji = $nama;
         $pengujian->min_supp = $minSupp;
         $pengujian->min_confidence = $minConfidence;
         $totalProduk = Product::count();
         // cari nilai support
         $dataProduk = Product::all();
         foreach ($dataProduk as $produk) {
-            $kdProduk = $produk->kd_produk;
-            $totalTransaksi = TransactionDetail::where('kd_barang', $kdProduk)->count();
+            $kdProduk = $produk->id;
+            $totalTransaksi = TransactionDetail::where('products_id', $kdProduk)->count();
             $nSupport = ($totalTransaksi / $totalProduk) * 100;
             $supp = new M_Support();
             $supp->kd_pengujian = $kdPengujian;
@@ -45,27 +44,24 @@ class C_Apriori extends Controller
             $supp->save();
         }
         // kombinasi 2 item set
-        $qProdukA = M_Support::where('kd_pengujian', $kdPengujian)->where('support', '>=', $minSupp)->get();
+        $qProdukA = M_Support::where('kd_pengujian', $kdPengujian)->where('support', '>=', $minSupp)->orderBy('kd_produk')->get();
         foreach ($qProdukA as $qProdA) {
             $kdProdukA = $qProdA->kd_produk;
             $qProdukB = M_Support::where('kd_pengujian', $kdPengujian)->where('support', '>=', $minSupp)->get();
             foreach ($qProdukB as $qProdB) {
                 $kdProdukB = $qProdB->kd_produk;
                 $jumB = M_Nilai_Kombinasi::where('kd_barang_a', $kdProdukB)->count();
-                if ($jumB > 0) {
-                } else {
-                    if ($kdProdukA == $kdProdukB) {
-                    } else {
-                        $kdKombinasi = Str::uuid();
-                        $nk = new M_Nilai_Kombinasi();
-                        $nk->kd_pengujian = $kdPengujian;
-                        $nk->kd_kombinasi = $kdKombinasi;
-                        $nk->kd_barang_a = $kdProdukA;
-                        $nk->kd_barang_b = $kdProdukB;
-                        $nk->jumlah_transaksi = 0;
-                        $nk->support = 0;
-                        $nk->save();
-                    }
+
+                if ($kdProdukA != $kdProdukB && $jumB <= 0) {
+                    $kdKombinasi = Str::uuid();
+                    $nk = new M_Nilai_Kombinasi();
+                    $nk->kd_pengujian = $kdPengujian;
+                    $nk->kd_kombinasi = $kdKombinasi;
+                    $nk->kd_barang_a = $kdProdukA;
+                    $nk->kd_barang_b = $kdProdukB;
+                    $nk->jumlah_transaksi = 0;
+                    $nk->support = 0;
+                    $nk->save();
                 }
             }
         }
@@ -79,12 +75,12 @@ class C_Apriori extends Controller
             $kdBarangB = $nk->kd_barang_b;
 
             // cari total transaksi
-            $dataFaktur = TransactionDetail::distinct()->get(['code']);
+            $dataFaktur = TransactionDetail::distinct()->get(['transaction_id']);
             $fnTransaksi = 0;
             foreach ($dataFaktur as $faktur) {
-                $noFaktur = $faktur->code;
-                $qBonTransaksiA = TransactionDetail::where('code', $noFaktur)->where('kd_barang', $kdBarangA)->count();
-                $qBonTransaksiB = TransactionDetail::where('code', $noFaktur)->where('kd_barang', $kdBarangB)->count();
+                $noFaktur = $faktur->transaction_id;
+                $qBonTransaksiA = TransactionDetail::where('transaction_id', $noFaktur)->where('products_id', $kdBarangA)->count();
+                $qBonTransaksiB = TransactionDetail::where('transaction_id', $noFaktur)->where('products_id', $kdBarangB)->count();
                 if ($qBonTransaksiA == 1 && $qBonTransaksiB == 1) {
                     $fnTransaksi++;
                 }
@@ -92,7 +88,7 @@ class C_Apriori extends Controller
             $support = ($fnTransaksi / $totalProduk) * 100;
             M_Nilai_Kombinasi::where('kd_pengujian', $kdPengujian)->where('kd_kombinasi', $kdKombinasi)->update([
                 'jumlah_transaksi' => $fnTransaksi,
-                'support' => $support
+                'support' => $support,
             ]);
         }
 
@@ -109,7 +105,6 @@ class C_Apriori extends Controller
         $dataKombinasiItemset = M_Nilai_Kombinasi::where('kd_pengujian', $kdPengujian)->get();
         $dataMinConfidence = M_Nilai_Kombinasi::where('kd_pengujian', $kdPengujian)->where('support', '>=', $dataPengujian->min_confidence)->get();
         $totalProduk = Product::count();
-        // dd($dataSupportProduk);
         $dr = [
             'dataSupport' => $dataSupportProduk,
             'totalProduk' => $totalProduk,
@@ -117,7 +112,7 @@ class C_Apriori extends Controller
             'dataMinSupport' => $dataMinSupp,
             'dataKombinasiItemset' => $dataKombinasiItemset,
             'dataMinConfidence' => $dataMinConfidence,
-            'kdPengujian' => $kdPengujian
+            'kdPengujian' => $kdPengujian,
         ];
         return view('pages.hasilAnalisa', $dr);
     }

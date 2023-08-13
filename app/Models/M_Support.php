@@ -14,16 +14,16 @@ class M_Support extends Model
     protected $fillable = [
         'kd_pengujian',
         'kd_produk',
-        'support'
+        'support',
     ];
 
     public function dataProduk($kdProduk)
     {
-        return Product::where('kd_produk', $kdProduk)->first();
+        return Product::where('id', $kdProduk)->first();
     }
 
     public function totalTransaksi($kdProduk)
     {
-        return TransactionDetail::where('kd_barang', $kdProduk)->count();
+        return TransactionDetail::where('products_id', $kdProduk)->count();
     }
 }

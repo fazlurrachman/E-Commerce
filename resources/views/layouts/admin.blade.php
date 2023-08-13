@@ -48,6 +48,10 @@
                             Transactions
                         </a>
 
+                        <a href="{{ route('apiori.setup') }}"
+                            class="list-group-item list-group-item-action {{ request()->is('setup') ? 'active' : '' }}">
+                            Proses Apiori
+                        </a>
                         <a href="{{ route('user.index') }}"
                             class="list-group-item list-group-item-action {{ request()->is('admin/user*') ? 'active' : '' }} ">
                             Users
