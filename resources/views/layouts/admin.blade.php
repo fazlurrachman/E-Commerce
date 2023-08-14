@@ -56,7 +56,7 @@
                             class="list-group-item list-group-item-action {{ request()->is('admin/user*') ? 'active' : '' }} ">
                             Users
                         </a>
-                        <a class="dropdown-item" href="{{ route('logout') }}"
+                        <a class="list-group-item list-group-item-action" href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Logout
                         </a>
