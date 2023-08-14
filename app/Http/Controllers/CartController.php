@@ -30,7 +30,7 @@ class CartController extends Controller
 
         $cart->delete();
 
-        return redirect()->route('cart');
+        return redirect()->route('cart')->with('success','data berhasil dihapus');
     }
 
     public function success()

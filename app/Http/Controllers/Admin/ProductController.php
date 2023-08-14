@@ -23,16 +23,16 @@ class ProductController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $query = Product::with(['user', 'category']);
+            $query = Product::with(['user', 'category'])->latest();
 
             return Datatables::of($query)
                 ->addColumn('action', function ($item) {
                     return '
                         <div class="btn-group">
                             <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle mr-1 mb-1" 
+                                <button class="btn btn-primary dropdown-toggle mr-1 mb-1"
                                     type="button" id="action' .  $item->id . '"
-                                        data-toggle="dropdown" 
+                                        data-toggle="dropdown"
                                         aria-haspopup="true"
                                         aria-expanded="false">
                                         Aksi
@@ -88,7 +88,7 @@ class ProductController extends Controller
 
         Product::create($data);
 
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('success','data berhasil disimpan !!');
     }
 
     /**
@@ -128,7 +128,7 @@ class ProductController extends Controller
 
         $item->update($data);
 
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('success','data berhasil disimpan !!');
     }
 
     /**

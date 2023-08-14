@@ -16,21 +16,21 @@ class TransactionController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $query = Transaction::with(['user']);
-            if(request()->tanggal_start && request()->tanggal_end){
-                $query->whereBeetwen('created_at',[request()->tanggal_start,request()->tanggal_end]);
-            }else if(request()->tanggal_start || request()->tanggal_end){
-                $query->whereDate('created_at',request()->tanggal_start??request()->tanggal_end);
+            $query = Transaction::with(['user'])->latest();
+            if (request()->tanggal_start && request()->tanggal_end) {
+                $query->whereBeetwen('created_at', [request()->tanggal_start, request()->tanggal_end]);
+            } else if (request()->tanggal_start || request()->tanggal_end) {
+                $query->whereDate('created_at', request()->tanggal_start ?? request()->tanggal_end);
             }
-            if(request()->status){
-                $query->where('transaction_status',request()->status == "pending" ? "PENDING" :(request()->status == "success" ? "SUCCESS" : "SHIPPING"  ));
+            if (request()->status) {
+                $query->where('transaction_status', request()->status == "pending" ? "PENDING" : (request()->status == "success" ? "SUCCESS" : "SHIPPING"));
             }
             return Datatables::of($query)
                 ->addColumn('action', function ($item) {
                     return '
                         <div class="btn-group">
                             <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle mr-1 mb-1" 
+                                <button class="btn btn-primary dropdown-toggle mr-1 mb-1"
                                     type="button" id="action' .  $item->id . '"
                                         data-toggle="dropdown" >
                                         Aksi
@@ -49,10 +49,10 @@ class TransactionController extends Controller
                             </div>
                     </div>';
                 })
-                ->editColumn('total_price',function($q){
+                ->editColumn('total_price', function ($q) {
                     return moneyFormat($q->total_price);
                 })
-                ->editColumn('created_at',function($q){
+                ->editColumn('created_at', function ($q) {
                     return dateID($q->created_at);
                 })
                 ->rawColumns(['action', 'photo'])

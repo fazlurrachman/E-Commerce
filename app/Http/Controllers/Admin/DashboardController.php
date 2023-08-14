@@ -25,8 +25,8 @@ class DashboardController extends Controller
             ->select(DB::raw(
                 'b.code as kode_transaksi,c.name,b.products_id as product_id, COUNT(b.products_id) AS count_product',
             ))
-            ->whereMonth('a.created_at', date('m'))
-            ->whereYear('a.created_at', date('Y'))
+            // ->whereMonth('a.created_at', date('m'))
+            // ->whereYear('a.created_at', date('Y'))
             ->groupBy('b.products_id')
             ->orderByDesc('count_product')
             ->get();

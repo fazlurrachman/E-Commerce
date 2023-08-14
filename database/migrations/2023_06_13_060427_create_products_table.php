@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('users_id');
+            $table->unsignedBigInteger('users_id');
             $table->integer('price');
             $table->longText('description');
             //  $table->char('kd_produk', 100);
+            $table->foreign('users_id')->references('id')->on('users');
+
             $table->softDeletes();
             $table->timestamps();
         });

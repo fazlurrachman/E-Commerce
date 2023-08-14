@@ -38,3 +38,15 @@ Route::get(
     '/regencies/{provinces_id}',
     [App\Http\Controllers\API\LocationController::class, 'regencies']
 )->name('api-regencies');
+
+//Route untuk API Check Ongkir
+Route::post(
+    '/check-ongkir',
+    [App\Http\Controllers\API\LocationController::class, 'checkOngkir']
+)->name('api-checkOngkir');
+
+//Route untuk API Check City by id
+Route::get(
+    '/city_id/{city_id}',
+    [App\Http\Controllers\API\LocationController::class, 'cityID']
+)->name('api-city-id');

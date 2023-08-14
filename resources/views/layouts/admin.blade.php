@@ -98,7 +98,14 @@
                                         Hi, {{ Auth::user()->name }}
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a href="/" class="dropdown-item">Logout</a>
+                                        {{-- <a href="/" class="dropdown-item">Logout</a> --}}
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                                     </div>
                                 </li>
                             </ul>
@@ -139,6 +146,7 @@
             $("#wrapper").toggleClass("toggled");
         });
     </script>
+     
     @stack('addon-script')
 </body>
 

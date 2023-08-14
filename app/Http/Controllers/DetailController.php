@@ -28,14 +28,23 @@ class DetailController extends Controller
 
     public function add(Request $request, $id)
     {
-        $data = [
-            'products_id' => $id,
-            'users_id' => Auth::user()->id
-        ];
 
-        Cart::create($data);
+        $cart = Cart::where('products_id', $id)
+        ->where('users_id', Auth::user()->id)
+        ->first();
+        if ($cart) {
+            $cart->increment('quantity', request()->quantity);
+        } else {
+            $data = [
+                'products_id' => $id,
+                'users_id' => Auth::user()->id,
+                'quantity' => request()->quantity,
+            ];
+            Cart::create($data);
+        }
 
-        return redirect()->route('cart');
+
+        return redirect()->route('cart')->with('success','data berhasil ditambahkan ke cart');
     }
 
     public function findAssociationRules()

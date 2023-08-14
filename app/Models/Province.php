@@ -23,7 +23,9 @@ class Province extends Model
      *
      * @var string
      */
-    protected $table = 'provinces';
+    protected $table = 'province_news';
+    protected $guarded = ['id'];
+
 
     /**
      * Province has many regencies.

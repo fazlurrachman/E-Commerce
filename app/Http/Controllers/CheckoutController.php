@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Cart;
+use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 
@@ -29,10 +30,13 @@ class CheckoutController extends Controller
             ->get();
 
         // Transaction Create
+        $cost = explode('|', $request->cost);
         $transaction = Transaction::create([
             'users_id' => Auth::user()->id,
             'insurance_price' => 0,
             'shipping_price' => 0,
+            'courier' => $request->courier,
+            'cost' => $cost[0],
             'total_price' => $request->total_price,
             'transaction_status' => 'PENDING',
             'code' => $code,
@@ -41,10 +45,11 @@ class CheckoutController extends Controller
         // Transaction Detail
         foreach ($carts as $cart) {
             $trx = 'TRX-' . mt_rand(000000, 999999);
-
+            Product::find($cart->product->id)->decrement('quantity', $cart->product->quantity);
             TransactionDetail::create([
                 'transaction_id' => $transaction->id,
                 'products_id' => $cart->product->id,
+                'quantity' => $cart->product->quantity,
                 'price' => $cart->product->price,
                 'shipping_status' => 'PENDING',
                 'resi' => '',
@@ -52,7 +57,7 @@ class CheckoutController extends Controller
             ]);
         }
 
-        // Menghapus Data Cart 
+        // Menghapus Data Cart
         Cart::where('users_id', Auth::user()->id)->delete();
 
         // Konfigurasi Midtrans
@@ -89,6 +94,5 @@ class CheckoutController extends Controller
     }
 
     public function callback(Request $request)
-    {
-    }
+    { }
 }

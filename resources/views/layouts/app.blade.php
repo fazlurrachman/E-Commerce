@@ -24,5 +24,7 @@
 
 <!-- Script -->
 @stack('prepend-script')
+<script src="{{ asset('vendor/vue/vue.js') }}"></script>
+
 @include('includes.script')
 @stack('addon-script')

@@ -31,10 +31,11 @@
                         <table class="table-borderless table-cart">
                             <thead>
                                 <tr>
-                                    <td>Image</td>
-                                    <td>Name</td>
-                                    <td>Price</td>
-                                    <td>Menu</td>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Name </th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Menu</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,13 +51,17 @@
                                                     alt="" class="cart-image" />
                                             @endif
                                         </td>
-                                        <td style="width: 35%">
+                                        <td style="width: 25%">
                                             <div class="product-title">{{ $cart->product->name }}</div>
                                             {{-- <div class="product-subtitle">Ikea Indonesia</div> --}}
                                         </td>
-                                        <td style="width: 35%">
+                                        <td style="width: 25%">
                                             <div class="product-title">Rp{{ number_format($cart->product->price) }}</div>
                                             <div class="product-subtitle">Rupiah</div>
+                                        </td>
+                                        <td style="width: 20%">
+                                            <div class="product-title">{{ $cart->quantity }} </div>
+                                            <div class="product-subtitle"></div>
                                         </td>
                                         <td style="width: 20%">
                                             <form action="{{ route('cart-delete', $cart->id) }}" method="POST">
@@ -69,7 +74,7 @@
                                         </td>
                                     </tr>
                                     @php
-                                        $totalPrice += $cart->product->price;
+                                        $totalPrice += $cart->product->price * $cart->quantity;
                                     @endphp
                                 @endforeach
                             </tbody>
@@ -87,7 +92,8 @@
 
                 <form action="{{ route('checkout') }}" id="locations" endtype="multipart/form-data" method="POST">
                     @csrf
-                    <input type="hidden" name="total_price" value="{{ $totalPrice }}">
+                    <input type="hidden" name="total_price" id="totalPrice" value="{{ $totalPrice }}">
+                    <input type="hidden" id="totalPay" name="total_pay" value="{{ $totalPrice }}">
                     <div class="row mb-2" data-aos="fade-up" data-aos-delay="200">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -117,9 +123,9 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="regencies_id">City</label>
-                                <select name="regencies_id" id="regencies_id" class="form-control" v-if="regencies"
-                                    v-model="regencies_id">
-                                    <option v-for="regency in regencies" :value="regencies_id">@{{ regency.name }}
+                                <select name="regencies_id" @change="GetCourier()" id="regencies_id" class="form-control"
+                                    v-if="regencies" v-model="city_id">
+                                    <option v-for="regency in regencies" :value="regency.id">@{{ regency.name }}
                                     </option>
                                 </select>
                                 <select v-else class="form-control"></select>
@@ -128,7 +134,52 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="zip_code">Postal Code</label>
-                                <input type="text" class="form-control" id="zip_code" name="zip_code" value="24211" />
+                                <input type="text" class="form-control" id="zip_code" name="zip_code"
+                                    value="24211" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group" v-if="courier">
+                                <label>KURIR PENGIRIMAN</label>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input select-courier" type="radio" name="courier"
+                                        id="ongkos_kirim-jne" value="jne" v-model="courier_type"
+                                        @change="getOngkir()" />
+                                    <label class="form-check-label font-weight-bold mr-4" for="ongkos_kirim-jne">
+                                        JNE</label>
+                                    <input class="form-check-input select-courier" type="radio" name="courier"
+                                        id="ongkos_kirim-tiki" value="tiki" v-model="courier_type"
+                                        @change="getOngkir()" />
+                                    <label class="form-check-label font-weight-bold mr-4"
+                                        for="ongkos_kirim-jnt">TIKI</label>
+                                    <input class="form-check-input select-courier" type="radio" name="courier"
+                                        id="ongkos_kirim-pos" value="pos" v-model="courier_type"
+                                        @change="getOngkir()" />
+                                    <label class="form-check-label font-weight-bold" for="ongkos_kirim-jnt">POS</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group" v-if="cost">
+
+                                <label class="font-weight-bold">SERVICE KURIR</label>
+                                <br />
+                                <div v-if="costs.length > 0">
+                                    <div v-for="value in costs" :key="value.service"
+                                        class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" :id="value.service"
+                                            :value="value.cost[0].value + '|' + value.service" v-model="costService"
+                                            @change="getCostService()" name="cost" />
+                                        <label class="form-check-label font-weight-normal mr-5" :for="value.service">
+                                            @{{ value.service }} - Rp. @{{ value.cost[0].value }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div v-else>
+                                    Tidak Ada Kurir
+                                </div>
+
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -162,13 +213,14 @@
                         <div class="col-4 col-md-3">
                             <div class="product-title">$0</div>
                             <div class="product-subtitle">Product Insurance</div>
-                        </div>
-                        <div class="col-4 col-md-2">
-                            <div class="product-title">$0</div>
-                            <div class="product-subtitle">Ship to Jakarta</div>
                         </div> --}}
+                        <div class="col-4 col-md-4">
+                            <div class="product-title" id="courier_cost">$0</div>
+                            <div class="product-subtitle"> Ship to <span id="tujuan"></span></div>
+                        </div>
                         <div class="col-6 col-md-6">
-                            <div class="product-title text-success">Rp{{ number_format($totalPrice ?? 0) }}</div>
+                            <div class="product-title text-success" id="totalPembayaran">
+                                Rp{{ number_format($totalPrice ?? 0) }}</div>
                             <div class="product-subtitle">Total</div>
                         </div>
                         <div class="col-8 col-md-6">
@@ -185,7 +237,7 @@
 
 
 @push('addon-script')
-    <script src="/vendor/vue/vue.js"></script>
+    {{-- <script src="/vendor/vue/vue.js"></script> --}}
     <script src="https://unpkg.com/vue-toasted"></script>
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
     <script>
@@ -196,12 +248,77 @@
                 this.getProvincesData();
             },
             data: {
+                courier: false,
+                courier_cost: 0,
+                courier_service: "",
+                cost: false,
+                costs: [],
+                costService: null,
                 provinces: null,
                 regencies: null,
                 provinces_id: null,
-                regencies_id: null
+                regencies_id: null,
+                city_id: null,
+                courier_type: null,
+                checkout: null,
             },
             methods: {
+                GetCourier() {
+                    var self = this;
+                    self.courier = true;
+
+                    axios.get('{{ url('api/city_id') }}/' + self.city_id)
+                        .then(function(response) {
+                            self.city = response.data.name;
+                            document.getElementById("tujuan").innerHTML = response.data.name;
+                        });
+                    // console.log(self.city_id)
+                },
+                getOngkir() {
+                    var self = this;
+
+                    axios.post("{{ route('api-checkOngkir') }}", {
+                            city_destination: self.city_id, // <-- ID kota
+                            courier: self.courier_type, // jenis kurir
+                        })
+                        .then((response) => {
+
+                            // set state cost menjadi true, untuk menampilkan pilihan cost pengiriman
+                            self.cost = true;
+                            //assign state costs dengan hasil response
+                            self.costs = response.data.data[0].costs;
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+
+                },
+                getCostService() {
+                    var self = this;
+                    let shipping = self.costService.split("|");
+
+                    self.checkout = true;
+
+
+                    self.courier_cost = shipping[0];
+                    self.courier_service = shipping[1];
+                    let total = document.getElementById('totalPay').value;
+                    // console.log(total)
+                    console.log(self.courier_cost)
+                    let formatCost = new Intl.NumberFormat('id-ID', {
+                        maximumSignificantDigits: 5
+                    }).format(self.courier_cost);
+                    document.getElementById('courier_cost').innerHTML = `Rp ${formatCost}`;
+
+                    let totalPayment = parseInt(total) + parseInt(self.courier_cost);
+                    let formatPayment = new Intl.NumberFormat('id-ID', {
+                        maximumSignificantDigits: 6
+                    }).format(totalPayment);
+                    console.log("total " + totalPayment);
+                    document.getElementById('totalPembayaran').innerHTML = `Rp ${formatPayment}`;
+
+                    document.getElementById('totalPrice').value = totalPayment;
+                },
                 getProvincesData() {
                     var self = this;
                     axios.get('{{ route('api-provinces') }}')

@@ -28,6 +28,7 @@
                                                 <th>Pemilik</th>
                                                 <th>Kategori</th>
                                                 <th>Harga</th>
+                                                <th>Stock</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -72,6 +73,10 @@
                 {
                     data: 'price',
                     name: 'price'
+                },
+                {
+                    data: 'quantity',
+                    name: 'quantity'
                 },
                 {
                     data: 'action',

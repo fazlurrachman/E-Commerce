@@ -28,4 +28,5 @@
 <script>
     const server = "{{ url('') }}/";
 </script>
+
 <script src="{{ asset('ladun/base/') }}/js/mainApp.js"></script>

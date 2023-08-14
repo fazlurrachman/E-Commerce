@@ -39,8 +39,8 @@ return [
         'is3ds' => env('MIDTRANS_IS_3DS'),
     ],
 
-    // 'rajaongkir' => [
-    //     'rajaOngkir' => env('RAJAONGKIR_API_KEY')
-    // ]
+    'rajaongkir' => [
+        'key' => env('RAJAONGKIR_API_KEY')
+    ]
 
 ];

@@ -21,6 +21,8 @@ class Transaction extends Model
         'total_price',
         'transaction_status',
         'code',
+        'cost',
+        'courier'
 
     ];
 
