@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Transaction;
 use Yajra\DataTables\Facades\DataTables;
+use PDF;
 
 class TransactionController extends Controller
 {

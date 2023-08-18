@@ -24,4 +24,10 @@ class M_Nilai_Kombinasi extends Model
     {
         return Product::where('id', $kdProduk)->first();
     }
+
+    public function galleries()
+    {
+        return $this->hasMany(ProductGallery::class, 'products_id', 'id');
+        // munculin data yang dihapus bisa pakai ->withTrashed();
+    }
 }

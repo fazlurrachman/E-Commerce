@@ -4,7 +4,9 @@
     Store Detail Page
 @endsection
 @push('addon-style')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endpush
 @section('content')
     <!-- Page Content -->
@@ -28,7 +30,7 @@
             </div>
         </section>
 
-        <section class="store-gallery mb-3" >
+        <section class="store-gallery mb-3">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8" data-aos="zoom-in">
@@ -70,25 +72,23 @@
                                     @csrf
                                     <div class="d-flex">
                                         <div class="d-flex my-2">
-                                            <button type="button" @click="GetMin()" class="btn btn-sm btn-danger"><i class="fa fa-minus" aria-hidden="true"></i></button>
-                                            <input
-                                              type="number"
-                                              name="quantity"
-                                              class="form-control mx-2"
-                                              readonly
-                                              min="1"
-                                              max="{{ $product->quantity }}"
-                                              v-model="quantity"
-                                              style="width: 70px !important;"
-                                            />
-                                            <button type="button" @click="GetPlush()" class="btn btn-sm btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                            <button type="button" @click="GetMin()" class="btn btn-sm btn-danger"><i
+                                                    class="fa fa-minus" aria-hidden="true"></i></button>
+                                            <input type="number" name="quantity" class="form-control mx-2" readonly
+                                                min="1" max="{{ $product->quantity }}" v-model="quantity"
+                                                style="width: 70px !important;" />
+                                            <button type="button" @click="GetPlush()" class="btn btn-sm btn-primary"><i
+                                                    class="fa fa-plus" aria-hidden="true"></i></button>
 
-                                          </div>
-                                          <div class="stock_total ml-3">
-                                            <div class="mt-3" ><h5>Stok Total : {{ $product->quantity }}</h5></div>
-                                          </div>
+                                        </div>
+                                        <div class="stock_total ml-3">
+                                            <div class="mt-3">
+                                                <h5>Stok Total : {{ $product->quantity }}</h5>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <button type="submit" class="btn btn-success px-4 text-white btn-block my-3" {{ $product->quantity <= 0 ? 'disabled' : '' }}
+                                    <button type="submit" class="btn btn-success px-4 text-white btn-block my-3"
+                                        {{ $product->quantity <= 0 ? 'disabled' : '' }}
                                         {{ $product->quantity == 0 ? 'disabled' : '' }}>
                                         Add to Cart
                                     </button>
@@ -113,93 +113,49 @@
                     </div>
                 </div>
             </section>
-
-            {{-- <section class="store-review">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-lg-8 mt-3 mb-3">
-                            <h5>Customer Review</h5>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-lg-8">
-                            <ul class="list-unstyled">
-                                <li class="media">
-                                    <img src="/images/icon-testimonial-1.png" alt="" class="mr-3 rounded-circle" />
-                                    <div class="media-body">
-                                        <h5 class="mt-2 mb-1">Hazza Risky</h5>
-                                        I thought it was not good for living room. I really happy
-                                        to decided buy this product last week now feels like
-                                        homey.
-                                    </div>
-                                </li>
-                                <li class="media">
-                                    <img src="/images/icon-testimonial-2.png" alt="" class="mr-3 rounded-circle" />
-                                    <div class="media-body">
-                                        <h5 class="mt-2 mb-1">Anna Sukkirata</h5>
-                                        Color is great with the minimalist concept. Even I thought
-                                        it was made by Cactus industry. I do really satisfied with
-                                        this..
-                                    </div>
-                                </li>
-                                <li class="media">
-                                    <img src="/images/icon-testimonial-3.png" alt="" class="mr-3 rounded-circle" />
-                                    <div class="media-body">
-                                        <h5 class="mt-2 mb-1">Dakimu Wangi</h5>
-                                        When I saw at first, it was really awesome to have with.
-                                        Just let me know if there is another upcoming product like
-                                        this..
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section> --}}
-
         </div>
     </div>
 @endsection
 
 @push('addon-script')
     {{-- <script src="/vendor/vue/vue.js"></script> --}}
-<script src="{{ asset('vendor/vue/vue.js') }}"></script>
+    <script src="{{ asset('vendor/vue/vue.js') }}"></script>
 
     <script>
-      var gallery = new Vue({
-        el: "#gallery",
-        mounted() {
-          AOS.init();
-        },
-        data: {
-          activePhoto: 0,
-          quantity: 1,
-          photos: [
-           @foreach($product->galleries as $gallery)
-            {
-              id: {{$gallery->id}},
-              url: "{{url('storage/'.$gallery->photos)}}",
+        var gallery = new Vue({
+            el: "#gallery",
+            mounted() {
+                AOS.init();
             },
-          @endforeach
-          ],
-        },
-        methods: {
-          changeActive(id) {
-            this.activePhoto = id;
-          },
-          GetMin(){
-            if(this.quantity > 1){
-              this.quantity--;
-            }
-          },
+            data: {
+                activePhoto: 0,
+                quantity: 1,
+                photos: [
+                    @foreach ($product->galleries as $gallery)
+                        {
+                            id: {{ $gallery->id }},
+                            url: "{{ url('storage/' . $gallery->photos) }}",
+                        },
+                    @endforeach
+                ],
+            },
+            methods: {
+                changeActive(id) {
+                    this.activePhoto = id;
+                },
+                GetMin() {
+                    if (this.quantity > 1) {
+                        this.quantity--;
+                    }
+                },
 
-          GetPlush(){
-            if(this.quantity < {{ $product->quantity }}){
-              this.quantity++;
-            }
-            // this.quantity += 1;
-          }
-        },
-      });
+                GetPlush() {
+                    if (this.quantity < {{ $product->quantity }}) {
+                        this.quantity++;
+                    }
+                    // this.quantity += 1;
+                }
+            },
+        });
     </script>
 @endpush

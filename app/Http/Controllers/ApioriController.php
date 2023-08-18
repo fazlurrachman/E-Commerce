@@ -116,4 +116,24 @@ class ApioriController extends Controller
         ];
         return view('pages.hasilAnalisa', $dr);
     }
+
+    public function hasilRekom(Request $request, $kdPengujian)
+    {
+        $dataPengujian = M_Pengujian::where('kd_pengujian', $kdPengujian)->first();
+        $dataSupportProduk = M_Support::where('kd_pengujian', $kdPengujian)->get();
+        $dataMinSupp = M_Support::where('kd_pengujian', $kdPengujian)->where('support', '>=', $dataPengujian->min_supp)->get();
+        $dataKombinasiItemset = M_Nilai_Kombinasi::where('kd_pengujian', $kdPengujian)->get();
+        $dataMinConfidence = M_Nilai_Kombinasi::where('kd_pengujian', $kdPengujian)->where('support', '>=', $dataPengujian->min_confidence)->get();
+        $totalProduk = Product::count();
+        $dr = [
+            'dataSupport' => $dataSupportProduk,
+            'totalProduk' => $totalProduk,
+            'dataPengujian' => $dataPengujian,
+            'dataMinSupport' => $dataMinSupp,
+            'dataKombinasiItemset' => $dataKombinasiItemset,
+            'dataMinConfidence' => $dataMinConfidence,
+            'kdPengujian' => $kdPengujian,
+        ];
+        return view('pages.hasilRekom', $dr);
+    }
 }

@@ -15,6 +15,10 @@
                     <a href="{{ route('categories') }}" class="nav-link">Produk</a>
 
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('rekom') }}" class="nav-link">Rekomendasi</a>
+
+                </li>
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="javascript:void(0)" onclick="renderPage('setup')">
                         Proses Apriori

@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('transaction_details', function (Blueprint $table) {
+        Schema::table('transactions_details', function (Blueprint $table) {
             $table->dropColumn('quantity');
         });
     }

@@ -73,26 +73,18 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         // // semua data
-        // $data = $request->all();
-
-        // //menggunakan slug dari laravel
-        // $data['slug'] = Str::slug($request->name);
-        // //proses upload dengan request file
-        // $data['photo'] = $request->file('photo')->store('assets/category', 'public');
-
-        // //membuat kategori
-        // Category::create($data);
-
-        // //jika selesai redirect ke halaman kategori
-        // return redirect()->route('category.index');
-
         $data = $request->all();
 
+        // //menggunakan slug dari laravel
         $data['slug'] = Str::slug($request->name);
+
+        // //proses upload dengan request file
         $data['photo'] = $request->file('photo')->store('assets/category', 'public');
 
+        // //membuat kategori
         Category::create($data);
 
+        // //jika selesai redirect ke halaman kategori
         return redirect()->route('category.index');
     }
 

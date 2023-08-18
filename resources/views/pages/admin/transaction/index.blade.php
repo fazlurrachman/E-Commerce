@@ -127,5 +127,10 @@
             $('#crudTable').DataTable().draw(true);
 
         })
+
+        // Mengarahkan ke halaman cetak PDF saat tombol "Unduh PDF" diklik
+        $('a#cetak-pdf').click(function() {
+            window.location.href = "{{ route('admin.transactions.cetak_pdf') }}";
+        });
     </script>
 @endpush

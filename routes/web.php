@@ -29,6 +29,8 @@ Route::get('/setup', [ApioriController::class, 'setupPerhitunganApriori'])->name
 Route::post('/proses', [ApioriController::class, 'prosesAnalisaApriori'])->name('apiori.proses');
 Route::get('/hasil/{kdPengujian}', [ApioriController::class, 'hasilAnalisa'])->name('apiori.hasil');
 
+
+
 Route::get('/details/{id}', [App\Http\Controllers\DetailController::class, 'index'])->name('detail');
 Route::post('/details/{id}', [App\Http\Controllers\DetailController::class, 'add'])->name('detail-add');
 
@@ -46,6 +48,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Route Checkout
     Route::post('/checkout', [App\Http\Controllers\CheckoutController::class, 'process'])->name('checkout');
+
+    Route::get('/rekom', [App\Http\Controllers\show::class, 'rekom'])->name('rekom');
+    Route::get('/hasilR/{kdPengujian}', [ApioriController::class, 'hasilRekom'])->name('hasilRekom');
+
 
     // Route Untuk Dashboard
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])
