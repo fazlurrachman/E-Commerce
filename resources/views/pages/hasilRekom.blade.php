@@ -38,10 +38,7 @@
                             </center>
                             <p class="card-text text-wrap mb-lg-1"><strong>Harga :
                                 </strong>Rp.{{ number_format($dataProduk->price) }}</p>
-                            {{-- <p class="card-text mb-lg-1"><strong>Penerbit :
-                            </strong>{{ $dataProduk->penerbit }}</p>
-                        <p class="card-text mb-lg-0"><strong>Tahun Terbit :
-                            </strong>{{ $dataProduk->tahun }}</p> --}}
+
                         </div>
                         <br>
                     </div>

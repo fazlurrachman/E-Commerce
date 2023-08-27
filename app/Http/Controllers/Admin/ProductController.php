@@ -88,7 +88,7 @@ class ProductController extends Controller
 
         Product::create($data);
 
-        return redirect()->route('product.index')->with('success','data berhasil disimpan !!');
+        return redirect()->route('product.index')->with('success', 'data berhasil disimpan !!');
     }
 
     /**
@@ -128,7 +128,7 @@ class ProductController extends Controller
 
         $item->update($data);
 
-        return redirect()->route('product.index')->with('success','data berhasil disimpan !!');
+        return redirect()->route('product.index')->with('success', 'data berhasil disimpan !!');
     }
 
     /**

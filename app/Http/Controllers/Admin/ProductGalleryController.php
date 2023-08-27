@@ -83,7 +83,7 @@ class ProductGalleryController extends Controller
 
         ProductGallery::create($data);
 
-        return redirect()->route('product-gallery.index')->with('success','data berhasil disimpan !!');
+        return redirect()->route('product-gallery.index')->with('success', 'data berhasil disimpan !!');
     }
 
     /**

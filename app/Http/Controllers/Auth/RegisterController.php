@@ -68,9 +68,6 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            // 'store_name' => ['nullable', 'string', 'max:255'],
-            // 'categories_id' => ['nullable', 'integer', 'exists:categories,id'],
-            // 'is_store_open' => ['required'],
         ]);
     }
 
@@ -86,9 +83,6 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            // 'store_name' => isset($data['store_name']) ? $data['store_name'] : '',
-            // 'categories_id' => isset($data['categories_id']) ? $data['categories_id'] : 'NULL',
-            // 'store_status' => isset($data['is_store_open']) ? 1 : 0,
 
         ]);
     }
@@ -100,7 +94,7 @@ class RegisterController extends Controller
 
     public function check(Request  $request)
     {
-        // Mengecek email, apakah email pada user alebih dari 1 atau ada maka Unavailable jika 0 maka Available
+        // Mengecek email, apakah email pada user lebih dari 1 atau ada maka Unavailable jika 0 maka Available
         return User::where('email', $request->email)->count() > 0 ? 'Unavailable' : 'Available';
     }
 }

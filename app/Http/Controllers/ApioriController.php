@@ -31,6 +31,7 @@ class ApioriController extends Controller
         $pengujian->min_supp = $minSupp;
         $pengujian->min_confidence = $minConfidence;
         $totalProduk = Product::count();
+
         // cari nilai support
         $dataProduk = Product::all();
         foreach ($dataProduk as $produk) {
@@ -43,6 +44,7 @@ class ApioriController extends Controller
             $supp->support = $nSupport;
             $supp->save();
         }
+
         // kombinasi 2 item set
         $qProdukA = M_Support::where('kd_pengujian', $kdPengujian)->where('support', '>=', $minSupp)->orderBy('kd_produk')->get();
         foreach ($qProdukA as $qProdA) {

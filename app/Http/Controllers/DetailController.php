@@ -30,8 +30,8 @@ class DetailController extends Controller
     {
 
         $cart = Cart::where('products_id', $id)
-        ->where('users_id', Auth::user()->id)
-        ->first();
+            ->where('users_id', Auth::user()->id)
+            ->first();
         if ($cart) {
             $cart->increment('quantity', request()->quantity);
         } else {
@@ -44,7 +44,7 @@ class DetailController extends Controller
         }
 
 
-        return redirect()->route('cart')->with('success','data berhasil ditambahkan ke cart');
+        return redirect()->route('cart')->with('success', 'data berhasil ditambahkan ke cart');
     }
 
     public function findAssociationRules()
